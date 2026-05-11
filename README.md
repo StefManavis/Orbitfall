@@ -47,3 +47,101 @@ Orbitfall/
 ├── ProjectSettings/      # Unity project settings
 ├── .gitignore
 └── README.md
+
+Main Gameplay Systems
+Player Controller
+
+The player controller handles movement, rotation, screen clamping, and shooting.
+
+The project supports touch input for mobile-style control and mouse input inside the Unity editor for testing. The player moves using a Rigidbody2D, rotates toward the movement direction, and is kept within the visible camera boundaries.
+
+When the player is not moving, the controller searches for the nearest enemy and fires projectiles toward it.
+
+Combat System
+
+The combat system uses projectile prefabs for shooting.
+
+Bullets move forward, damage enemies on collision, and are destroyed after a short lifetime. Player stats affect bullet damage, fire rate, number of bullets per volley, and number of volleys per shot.
+
+Enemy System
+
+Enemies locate the player and move toward them using 2D physics.
+
+Each enemy has configurable movement speed, health, and contact damage. When an enemy is defeated, it notifies the enemy spawner so the room-clear logic can continue.
+
+Room System
+
+Orbitfall uses a room-based structure.
+
+A RoomManager loads random room prefabs from a room pool. Each room has its own player spawn point and enemy spawn points. When a room starts, enemies are spawned into that room.
+
+Upgrade System
+
+After all enemies in a room are defeated, the upgrade system offers the player a set of upgrade choices.
+
+Available upgrades currently include:
+
+Fire rate increase
+Damage increase
+Movement speed increase
+Max HP increase
+Additional bullets per volley
+Additional volleys per shot
+
+The upgrade UI pauses the game while the player chooses an upgrade, then resumes gameplay.
+
+How to Open the Project
+Clone the repository:
+git clone https://github.com/StefManavis/Orbitfall.git
+Open Unity Hub.
+Click Add project.
+Select the cloned Orbitfall folder.
+Open the project in Unity.
+How to Play / Test
+Open the main Unity scene from the Assets/Scenes folder.
+Press Play in the Unity editor.
+Use mouse input in the editor to test movement.
+Clear enemies in each room to trigger upgrade selection and progress to the next room.
+Current Status
+
+This project is currently in development.
+
+Implemented so far:
+
+Player movement
+Player health
+Enemy movement and contact damage
+Projectile shooting
+Room loading
+Enemy spawning
+Upgrade choices
+Basic stat progression
+
+Planned improvements:
+
+More enemy types
+More room layouts
+Improved upgrade balancing
+Better UI and menus
+Sound effects and music
+More polished visuals and effects
+Game over and restart flow
+More complete progression system
+What I Practiced
+
+Through this project, I practiced:
+
+C# scripting in Unity
+Object-oriented programming
+Component-based game architecture
+Unity 2D physics
+Player input handling
+Projectile and collision logic
+Enemy behavior
+Room-based game flow
+UI-driven upgrade selection
+Git/GitHub version control for a Unity project
+Author
+
+Stefanos Manavis
+GitHub: github.com/StefManavis
