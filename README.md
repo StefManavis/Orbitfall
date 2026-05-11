@@ -29,6 +29,7 @@ The project is built around room-based combat, real-time player control, enemy s
 
 ## Project Structure
 
+```md
 ```text
 Orbitfall/
 ├── Assets/
@@ -47,6 +48,8 @@ Orbitfall/
 ├── ProjectSettings/      # Unity project settings
 ├── .gitignore
 └── README.md
+
+```md
 
 Main Gameplay Systems
 Player Controller
