@@ -181,7 +181,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6.2
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -520,7 +520,7 @@ MonoBehaviour:
   currentLevel: 1
   currentXP: 0
   baseXPToLevel: 5
-  xpGrowthRate: 1.15
+  xpGrowthRate: 1.25
 --- !u!1 &255498025
 GameObject:
   m_ObjectHideFlags: 0
@@ -1208,6 +1208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoomManager
   roomPrefabs:
   - {fileID: 5430190230898131202, guid: 5889876eaffe8a64999f2a78741ba4c6, type: 3}
+  currentRoomNumber: 0
 --- !u!4 &684894618
 Transform:
   m_ObjectHideFlags: 0
@@ -1659,6 +1660,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   enemyPrefabs:
   - {fileID: 3532175291384907349, guid: 0f418c36091ac7f4eaa115aa595c902e, type: 3}
+  enemiesToSpawn: 5
+  spawnCheckRadius: 0.45
+  minDistanceFromPlayer: 3
+  maxSpawnAttemptsPerEnemy: 30
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  delayBeforeXPCollect: 0.25
+  delayBeforeNextRoom: 0.35
+  maxXPCollectionWaitTime: 3
 --- !u!4 &1337857323
 Transform:
   m_ObjectHideFlags: 0
@@ -1832,7 +1846,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: -6, y: 13}
+  m_SizeDelta: {x: 0, y: 13}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1485882355
 MonoBehaviour:
@@ -2044,7 +2058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.23438184, g: 0.030704875, b: 0.4339623, a: 1}
+  m_Color: {r: 0.9433962, g: 0.057849795, b: 0.057849795, a: 0.64705884}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
