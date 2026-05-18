@@ -9,9 +9,14 @@ public class Enemy : MonoBehaviour
     public int maxHP = 3;
     public int contactDamage = 1;
 
+    [Header("XP Drop")]
+    public GameObject xpBlobPrefab;
+    public int xpReward = 1;
+
     private int currentHP;
     private Transform player;
     private Rigidbody2D rb;
+    private bool isDead = false;
 
     public float stopDistance = 0.6f;
 
@@ -25,13 +30,24 @@ public class Enemy : MonoBehaviour
         currentHP = maxHP;
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+
         if (playerObj != null)
+        {
             player = playerObj.transform;
+        }
     }
 
     void FixedUpdate()
     {
-        if (player == null) return;
+        if (isDead)
+        {
+            return;
+        }
+
+        if (player == null)
+        {
+            return;
+        }
 
         Vector2 toPlayer = (Vector2)player.position - rb.position;
         float distance = toPlayer.magnitude;
@@ -40,36 +56,84 @@ public class Enemy : MonoBehaviour
         {
             Vector2 dir = toPlayer.normalized;
 
-            // MOVE
             rb.MovePosition(rb.position + dir * moveSpeed * Time.fixedDeltaTime);
 
-            // ROTATE TOWARDS MOVEMENT
             float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
             rb.MoveRotation(angle);
         }
     }
 
-
-
-    // ---------------- DAMAGE ----------------
     public void TakeDamage(int dmg)
     {
+        if (isDead)
+        {
+            return;
+        }
+
         currentHP -= dmg;
 
         if (currentHP <= 0)
         {
-            EnemySpawner spawner = Object.FindFirstObjectByType<EnemySpawner>();
-            if (spawner != null)
-                spawner.OnEnemyKilled(gameObject);
-
-            Destroy(gameObject);
+            Die();
         }
     }
 
-    // ---------------- PLAYER OVERLAP (NO PUSH) ----------------
+    private void Die()
+    {
+        if (isDead)
+        {
+            return;
+        }
+
+        isDead = true;
+
+        DropXP();
+
+        EnemySpawner spawner = Object.FindFirstObjectByType<EnemySpawner>();
+
+        if (spawner != null)
+        {
+            spawner.OnEnemyKilled(gameObject);
+        }
+
+        Destroy(gameObject);
+    }
+
+    private void DropXP()
+    {
+        if (xpBlobPrefab == null)
+        {
+            Debug.LogWarning("Enemy: XP Blob Prefab is missing.");
+            return;
+        }
+
+        GameObject xpBlobObject = Instantiate(
+            xpBlobPrefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+        XPBlob xpBlob = xpBlobObject.GetComponent<XPBlob>();
+
+        if (xpBlob != null)
+        {
+            xpBlob.xpAmount = xpReward;
+        }
+        else
+        {
+            Debug.LogWarning("Enemy: XP Blob Prefab does not have an XPBlob component.");
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (isDead)
+        {
+            return;
+        }
+
         PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+
         if (playerHealth != null)
         {
             playerHealth.TakeDamage(contactDamage);

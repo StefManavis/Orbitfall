@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     [Header("Base Stats")]
-    public float moveSpeed = 6f;
+    public float moveSpeed = 3f;
     public float fireRate = 0.4f;
     public int bulletDamage = 1;
     public int maxHP = 5;

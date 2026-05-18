@@ -110,9 +110,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be5f7edffef0fee4381b087585548864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  moveSpeed: 2.5
+  moveSpeed: 1.8
   maxHP: 3
   contactDamage: 1
+  xpBlobPrefab: {fileID: 405197847752857102, guid: 24a22bd1b5a006e4ca4c456ea929881f, type: 3}
+  xpReward: 1
   stopDistance: 0.6
 --- !u!1001 &6942760280169667098
 PrefabInstance:

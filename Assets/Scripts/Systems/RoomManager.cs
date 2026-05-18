@@ -6,8 +6,11 @@ public class RoomManager : MonoBehaviour
     [Header("Room Pool")]
     public List<GameObject> roomPrefabs;
 
-    GameObject currentRoom;
-    GameObject player;
+    [Header("Room Progress")]
+    public int currentRoomNumber = 0;
+
+    private GameObject currentRoom;
+    private GameObject player;
 
     void Start()
     {
@@ -17,19 +20,34 @@ public class RoomManager : MonoBehaviour
 
     public void LoadNextRoom()
     {
-        // Destroy old room
+        currentRoomNumber++;
+
         if (currentRoom != null)
+        {
             Destroy(currentRoom);
+        }
 
-        // Pick random room
-        GameObject roomPrefab =
-            roomPrefabs[Random.Range(0, roomPrefabs.Count)];
+        if (roomPrefabs == null || roomPrefabs.Count == 0)
+        {
+            Debug.LogWarning("RoomManager: No room prefabs assigned.");
+            return;
+        }
 
-        // Spawn room
+        GameObject roomPrefab = roomPrefabs[Random.Range(0, roomPrefabs.Count)];
+
         currentRoom = Instantiate(roomPrefab, Vector3.zero, Quaternion.identity);
 
-        // Enter it
-        RoomController rc = currentRoom.GetComponent<RoomController>();
-        rc.EnterRoom(player);
+        RoomController roomController = currentRoom.GetComponent<RoomController>();
+
+        if (roomController != null)
+        {
+            roomController.EnterRoom(player);
+        }
+        else
+        {
+            Debug.LogWarning("RoomManager: Spawned room has no RoomController.");
+        }
+
+        Debug.Log("Entered Room: " + currentRoomNumber);
     }
 }
