@@ -16,9 +16,14 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int dmg)
     {
-        if (invulnerable) return;
+        if (invulnerable)
+        {
+            return;
+        }
 
         currentHP -= dmg;
+        currentHP = Mathf.Clamp(currentHP, 0, maxHP);
+
         Debug.Log("Player HP: " + currentHP);
 
         if (currentHP <= 0)
@@ -34,7 +39,9 @@ public class PlayerHealth : MonoBehaviour
     System.Collections.IEnumerator Invulnerability()
     {
         invulnerable = true;
+
         yield return new WaitForSeconds(invulnerabilityTime);
+
         invulnerable = false;
     }
 
@@ -50,10 +57,19 @@ public class PlayerHealth : MonoBehaviour
     {
         maxHP = newMaxHP;
 
-        // Optional: heal by 1 when max HP increases
+        // Heal by 1 when max HP increases.
         currentHP = Mathf.Min(currentHP + 1, maxHP);
 
         Debug.Log("Max HP increased to: " + maxHP);
     }
 
+    public int GetCurrentHealth()
+    {
+        return currentHP;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHP;
+    }
 }
