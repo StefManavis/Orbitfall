@@ -2,30 +2,37 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 12f;
-    public float lifeTime = 2f;
-    private int damage;
+    [Header("Damage")]
+    public int damage = 1;
 
-    void Start()
+    [Header("Lifetime")]
+    public float lifetime = 3f;
+
+    [Header("Hit Settings")]
+    public LayerMask hitLayers;
+
+    private void Start()
     {
-        PlayerStats stats = Object.FindFirstObjectByType<PlayerStats>();
-        damage = stats != null ? stats.bulletDamage : 1;
-        Destroy(gameObject, lifeTime);
+        Destroy(gameObject, lifetime);
     }
 
-
-    void Update()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        transform.Translate(Vector2.up * speed * Time.deltaTime);
-    }
+        if (!CanHitLayer(other.gameObject.layer))
+            return;
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        Enemy enemy = other.GetComponent<Enemy>();
-        if (enemy != null)
+        IDamageable damageable = other.GetComponentInParent<IDamageable>();
+
+        if (damageable != null)
         {
-            enemy.TakeDamage(damage);
-            Destroy(gameObject);
+            damageable.TakeDamage(damage);
         }
+
+        Destroy(gameObject);
+    }
+
+    private bool CanHitLayer(int objectLayer)
+    {
+        return (hitLayers.value & (1 << objectLayer)) != 0;
     }
 }

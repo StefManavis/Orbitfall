@@ -7,22 +7,23 @@ public class BulletMovement : MonoBehaviour
     public float lifetime = 3f;
     public int damage = 1;
 
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
 
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         Destroy(gameObject, lifetime);
     }
 
-    void Start()
+    private void Start()
     {
         rb.linearVelocity = transform.up * speed;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        Enemy enemy = other.GetComponent<Enemy>();
+        Enemy enemy = other.GetComponentInParent<Enemy>();
+
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
@@ -30,11 +31,19 @@ public class BulletMovement : MonoBehaviour
             return;
         }
 
-    /*
-        if (other.CompareTag("Wall") || other.CompareTag("Obstacle"))
+        EnemyShooter enemyShooter = other.GetComponentInParent<EnemyShooter>();
+
+        if (enemyShooter != null)
+        {
+            enemyShooter.TakeDamage(damage);
+            Destroy(gameObject);
+            return;
+        }
+
+        if (other.CompareTag("Enemy") || other.transform.root.CompareTag("Enemy"))
         {
             Destroy(gameObject);
+            return;
         }
-    */
     }
 }

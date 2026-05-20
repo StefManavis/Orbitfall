@@ -2,16 +2,12 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamageable
 {
     [Header("Stats")]
-    public float moveSpeed = 2.5f;
+    public float moveSpeed = 1.8f;
     public int maxHP = 3;
     public int contactDamage = 1;
-
-    [Header("XP Drop")]
-    public GameObject xpBlobPrefab;
-    public int xpReward = 1;
 
     private int currentHP;
     private Transform player;
@@ -87,7 +83,12 @@ public class Enemy : MonoBehaviour
 
         isDead = true;
 
-        DropXP();
+        GiveXP giveXP = GetComponent<GiveXP>();
+
+        if (giveXP != null)
+        {
+            giveXP.DropXP();
+        }
 
         EnemySpawner spawner = Object.FindFirstObjectByType<EnemySpawner>();
 
@@ -97,32 +98,6 @@ public class Enemy : MonoBehaviour
         }
 
         Destroy(gameObject);
-    }
-
-    private void DropXP()
-    {
-        if (xpBlobPrefab == null)
-        {
-            Debug.LogWarning("Enemy: XP Blob Prefab is missing.");
-            return;
-        }
-
-        GameObject xpBlobObject = Instantiate(
-            xpBlobPrefab,
-            transform.position,
-            Quaternion.identity
-        );
-
-        XPBlob xpBlob = xpBlobObject.GetComponent<XPBlob>();
-
-        if (xpBlob != null)
-        {
-            xpBlob.xpAmount = xpReward;
-        }
-        else
-        {
-            Debug.LogWarning("Enemy: XP Blob Prefab does not have an XPBlob component.");
-        }
     }
 
     void OnTriggerEnter2D(Collider2D other)

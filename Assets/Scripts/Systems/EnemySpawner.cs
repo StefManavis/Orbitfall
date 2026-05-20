@@ -29,7 +29,7 @@ public class EnemySpawner : MonoBehaviour
     private readonly List<GameObject> aliveEnemies = new List<GameObject>();
     private bool roomClearing = false;
 
-    void Awake()
+    private void Awake()
     {
         roomManagerObject = GameObject.Find("RoomManager");
     }
@@ -105,7 +105,7 @@ public class EnemySpawner : MonoBehaviour
             GameObject enemy = Instantiate(
                 prefab,
                 spawnPosition,
-                Quaternion.identity,
+                prefab.transform.rotation,
                 roomParent
             );
 

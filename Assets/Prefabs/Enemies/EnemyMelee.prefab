@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5639402009196499916}
   - component: {fileID: 140947445448671147}
   - component: {fileID: 2779448284028843025}
+  - component: {fileID: 2676207601918991479}
   m_Layer: 0
   m_Name: EnemyMelee
   m_TagString: Enemy
@@ -113,9 +114,21 @@ MonoBehaviour:
   moveSpeed: 1.8
   maxHP: 3
   contactDamage: 1
+  stopDistance: 0.6
+--- !u!114 &2676207601918991479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3532175291384907349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10eb7e514e78b18419228ee16bbfe445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GiveXP
   xpBlobPrefab: {fileID: 405197847752857102, guid: 24a22bd1b5a006e4ca4c456ea929881f, type: 3}
   xpReward: 1
-  stopDistance: 0.6
 --- !u!1001 &6942760280169667098
 PrefabInstance:
   m_ObjectHideFlags: 0
